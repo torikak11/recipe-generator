@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
+import {useRouter} from "next/navigation";
 import CreatableSelect from "react-select";
 
 export default function Form() {
   const [input, setInput] = useState('');
   const [ingredients, setIngredients] = useState([]);
+  const router = useRouter();
+  console.log(ingredients)
 
   const createOption = (label) => ({
     label,
@@ -22,8 +25,15 @@ export default function Form() {
     }
   }
 
+  const handleSubmit = (event) => {
+    const inputs = ingredients.map(item => item.value);
+    const stringInputs = inputs.join("+");
+    event.preventDefault();
+    router.push(`/${stringInputs}/`);
+  }
+
   return (
-    <form className="flex flex-col gap-2 mt-16 max-w-md w-full">
+    <form className="flex flex-col gap-2 mt-16 max-w-md w-full" onSubmit={handleSubmit}>
       <label htmlFor="ingredients" className="uppercase text-green-200 text-sm pl-2">ingredients</label>
       <CreatableSelect
         isMulti={true}
@@ -39,7 +49,7 @@ export default function Form() {
         className="text-sm"
       />
       <div className="flex flex-row flex-wrap items-center gap-4 mt-2 py-2"></div>
-      <button className="bg-green-200 py-2 rounded-xl mt-4 w-36 text-white font-medium">
+      <button className="bg-green-200 py-2 rounded-xl mt-4 w-36 text-white font-medium transition ease-in-out hover:scale-105">
         Submit
       </button>
     </form>

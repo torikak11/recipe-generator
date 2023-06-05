@@ -1,11 +1,19 @@
-export default function RecipeCard() {
+export default function RecipeCard({ image, slug, title }) {
+  const url = "https://tasty.co/recipe/" + slug;
+  
+
   return (
-    <div className="w-[300px] flex-shrink-0">
-      <img
-        src="https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/442384.jpg"
-        className="rounded-xl"
-      />
-      <p className="text-center text-sm font-medium px-2">Quick & Easy Stir-Fry Recipes</p>
-    </div>
+    <a
+      className="pt-10 flex-shrink-0 transition duration-300 ease-in-out hover:scale-105"
+      href={url}
+      target="_blank"
+    >
+      <div className="w-[300px] h-[300px] ">
+        <img src={image} className="rounded-xl object-cover h-full w-full" />
+      </div>
+      <p className="text-ellipsis text-center text-sm font-medium px-2">
+        {title.length > 35 ? title.slice(0, 35) + "..." : title}
+      </p>
+    </a>
   );
 }
